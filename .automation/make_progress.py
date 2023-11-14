@@ -23,7 +23,7 @@ def get_progress() -> List[User]:
             x.name), sorted(cur.iterdir()))
     )
 
-    progress = [0 for _ in range(CHAPTER)]
+    progress_list = list()
     # user ごとの progress を取得する
     for user in users:
         u = User(user.name, user)
@@ -36,9 +36,9 @@ def get_progress() -> List[User]:
             # 問題数は max_cnt が上限で、それ以上のファイル数が含まれる場合は max_cnt にする
             solved_cnt = cnt
             u.progress[chap] = solved_cnt
-        progress.append(u)
+        progress_list.append(u)
 
-    return progress
+    return progress_list
 
 
 def plot_progress(users: np.array, scores: np.array):
