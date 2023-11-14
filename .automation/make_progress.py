@@ -88,10 +88,10 @@ def plot_progress(users: np.array, scores: np.array):
 
     # グラフの設定
     plt.xticks(rotation=30, fontsize=10)
-    # 縦軸のラベルを 10 問刻みにする
+    # 縦軸のラベルを 1 刻みにする
     whole = sum(QUESTIONS)
     plt.ylim(0, whole+1)
-    plt.yticks(np.arange(0, whole + 1, 10))
+    plt.yticks(np.arange(0, whole + 1, 25))
     # 凡例をグラフの外側に表示する
     plt.legend(bbox_to_anchor=(1.28, 1.0))
     plt.subplots_adjust(right=0.8)
