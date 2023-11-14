@@ -91,7 +91,7 @@ def plot_progress(users: np.array, scores: np.array):
     # 縦軸のラベルを 1 刻みにする
     whole = sum(QUESTIONS)
     plt.ylim(0, whole+1)
-    plt.yticks(np.arange(0, whole + 1, 25))
+    plt.yticks(np.arange(0, whole + 1, 1))
     # 凡例をグラフの外側に表示する
     plt.legend(bbox_to_anchor=(1.28, 1.0))
     plt.subplots_adjust(right=0.8)
@@ -111,8 +111,8 @@ def main():
 if __name__ == "__main__":
     sns.set()
     # 章数と各章の問題数
-    CHAPTER = 10
-    QUESTIONS = [10] * CHAPTER
+    CHAPTER = 1
+    QUESTIONS = [1] * CHAPTER
     # progress bar に表示しないディレクトリ名
     IGNORE = [""]
     def is_ignored(name): return name in IGNORE or name.startswith(".")
