@@ -28,7 +28,7 @@ jobs:
 
       - name: Calculate progress
         run: |
-          echo "PROGRESS=$(python calculate_progress.py $BRANCH_NAME $CHAPTER_NAME)" >> $GITHUB_ENV
+          echo "PROGRESS=$(python .automation/calculate_progress.py $BRANCH_NAME $CHAPTER_NAME)" >> $GITHUB_ENV
 
       - name: Generate progress bar
         run: |
