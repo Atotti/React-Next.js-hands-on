@@ -13,7 +13,7 @@ class User:
     def __init__(self, name, path):
         self.name = name
         self.path = path
-        self.progress = [0] * 25
+        self.progress = [0] * 10
 
 
 def get_progress() -> List[User]:
@@ -31,7 +31,7 @@ def get_progress() -> List[User]:
             # user/chapterXX の path (章だけ 1-indexed なので num+1)
             chapter_path = Path(user)
             # user/chapterXX に含まれる .py, .sh, .ipynb ファイルの数をカウント
-            cnt = 0
+            cnt = 1
             cnt += len(list(chapter_path.glob( f"chapter{chap+1:02d}")))
             # 問題数は max_cnt が上限で、それ以上のファイル数が含まれる場合は max_cnt にする
             solved_cnt = min(cnt, max_cnt)
@@ -91,7 +91,7 @@ def plot_progress(users: np.array, scores: np.array):
     # 縦軸のラベルを 1 刻みにする
     whole = sum(QUESTIONS)
     plt.ylim(0, whole+1)
-    plt.yticks(np.arange(0, whole + 1, 1))
+    plt.yticks(np.arange(0, whole + 1, 10))
     # 凡例をグラフの外側に表示する
     plt.legend(bbox_to_anchor=(1.28, 1.0))
     plt.subplots_adjust(right=0.8)
