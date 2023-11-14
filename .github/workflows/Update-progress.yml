@@ -12,7 +12,7 @@ on:
         description: "Purpose to manually run"
         required: true
         default: "test"
-
+permissions: write-all
 jobs:
   update:
     name: Update
@@ -38,7 +38,7 @@ jobs:
           python .automation/make_progress.py
       - name: Commit ${{ env.FILE_NAME }}
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
