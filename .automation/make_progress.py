@@ -92,9 +92,7 @@ def plot_progress(users: np.array, scores: np.array):
     whole = sum(QUESTIONS)
     plt.ylim(0, whole+1)
     plt.yticks(np.arange(0, whole + 1, 5))
-    # 凡例をグラフの外側に表示する
-    plt.legend(bbox_to_anchor=(1.28, 1.0))
-    plt.subplots_adjust(right=0.8)
+
     # グラフを書き出す
     plt.savefig("progress.png")
 
