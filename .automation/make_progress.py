@@ -111,7 +111,7 @@ def main():
 if __name__ == "__main__":
     sns.set()
     # 章数と各章の問題数
-    CHAPTER = 1
+    CHAPTER = 25
     QUESTIONS = [1] * CHAPTER
     # progress bar に表示しないディレクトリ名
     IGNORE = [""]
