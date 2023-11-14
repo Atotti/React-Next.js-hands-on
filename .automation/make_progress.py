@@ -27,7 +27,7 @@ def get_progress() -> List[User]:
     # user ごとの progress を取得する
     for user in users:
         u = User(user.name, user)
-        for chap, max_cnt in enumerate(QUESTIONS):
+        for chap, max_cnt in enumerate(CHAPTER):
             # user/chapterXX の path (章だけ 1-indexed なので num+1)
             chapter_path = Path(user)
             # user/chapterXX に含まれる .py, .sh, .ipynb ファイルの数をカウント
