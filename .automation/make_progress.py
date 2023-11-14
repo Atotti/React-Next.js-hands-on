@@ -13,7 +13,7 @@ class User:
     def __init__(self, name, path):
         self.name = name
         self.path = path
-        self.progress = [0] * 10
+        self.progress = [0] * 25
 
 
 def get_progress() -> List[User]:
