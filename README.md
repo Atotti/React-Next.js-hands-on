@@ -8,7 +8,7 @@ React/Next.js勉強会用のリポジトリです。
 ## usage
 初回はこのレポジトリを clone してください。
 ```
-$ git clone https://github.com/tmu-nlp/100knock2023.git
+$ git clone https://github.com/Atotti/Next.js-tutorial.git
 ```
 コードを書いたら remote repository に push してください。 チャプター名は二桁の数字にしてください（例: chapter01）。
 ```
