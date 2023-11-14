@@ -2,7 +2,7 @@
 React/Next.js勉強会用のリポジトリです。
 教材URL: https://nextjs.org/learn/react-foundations
 
-毎週4章分解いてください。
+毎週基本4章分解いてください。
 勉強会の時間には、事前に割り当てられた問題の解説をしてもらいます。
 
 ## usage
