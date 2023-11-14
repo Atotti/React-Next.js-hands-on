@@ -14,7 +14,7 @@ $ git clone https://github.com/Atotti/Next.js-tutorial.git
 ```
 $ git branch <任意のブランチ名(以下、b_name)> (e.g. git branch ayuto)
 $ git checkout <b_name>
-$ git add <任意のファイル・フォルダ> (e.g. git add ./hajime/chapter01/index.html)
+$ git add <任意のファイル・フォルダ> (e.g. git add ./ayuto/chapter01/index.html)
 $ git commit -m 'your message'
 $ git pull origin main
 $ git push origin <b_name>
