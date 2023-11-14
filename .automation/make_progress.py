@@ -31,9 +31,7 @@ def get_progress() -> List[User]:
             # user/chapterXX の path (章だけ 1-indexed なので num+1)
             chapter_path = Path(user / f"chapter{chap+1:02d}")
             # user/chapterXX に含まれる .py, .sh, .ipynb ファイルの数をカウント
-            cnt = 0
-            for ext in ["py", "sh", "ipynb"]:
-                cnt += len(list(chapter_path.glob(f"*.{ext}")))
+            cnt = 10
             # 問題数は max_cnt が上限で、それ以上のファイル数が含まれる場合は max_cnt にする
             solved_cnt = min(cnt, max_cnt)
             u.progress[chap] = solved_cnt
@@ -60,16 +58,14 @@ def plot_progress(users: np.array, scores: np.array):
         )
     today = datetime.date.today()
     date_list = list()
-    date_list.append(datetime.date(2023, 4, 24))
-    date_list.append(datetime.date(2023, 5, 1))
-    date_list.append(datetime.date(2023, 5, 8))
-    date_list.append(datetime.date(2023, 5, 15))
-    date_list.append(datetime.date(2023, 5, 22))
-    date_list.append(datetime.date(2023, 6, 5))
-    date_list.append(datetime.date(2023, 6, 12))
-    date_list.append(datetime.date(2023, 6, 26))
-    date_list.append(datetime.date(2023, 7, 10))
-    date_list.append(datetime.date(2923, 7, 24))
+    date_list.append(datetime.date(2023, 12, 6))
+    date_list.append(datetime.date(2023, 12, 13))
+    date_list.append(datetime.date(2023, 12, 20))
+    date_list.append(datetime.date(2023, 12, 27))
+    date_list.append(datetime.date(2023, 1, 10))
+    date_list.append(datetime.date(2023, 1, 17))
+    date_list.append(datetime.date(2023, 1, 24))
+
     # print(date_list)
     d = [date for date in date_list if today >= date]
     # print(date_list)
