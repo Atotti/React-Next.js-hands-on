@@ -29,9 +29,10 @@ def get_progress() -> List[User]:
         u = User(user.name, user)
         for chap, max_cnt in enumerate(QUESTIONS):
             # user/chapterXX の path (章だけ 1-indexed なので num+1)
-            chapter_path = Path(user / f"chapter{chap+1:02d}")
+            chapter_path = Path(user)
             # user/chapterXX に含まれる .py, .sh, .ipynb ファイルの数をカウント
-            cnt = 10
+            cnt = 0
+            cnt += len(list(chapter_path.glob( f"chapter{chap+1:02d}")))
             # 問題数は max_cnt が上限で、それ以上のファイル数が含まれる場合は max_cnt にする
             solved_cnt = min(cnt, max_cnt)
             u.progress[chap] = solved_cnt
