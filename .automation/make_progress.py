@@ -23,7 +23,7 @@ def get_progress() -> List[User]:
             x.name), sorted(cur.iterdir()))
     )
 
-    progress = list()
+    progress = [0 for _ in range(CHAPTER)]
     # user ごとの progress を取得する
     for user in users:
         u = User(user.name, user)
