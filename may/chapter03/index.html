@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+            //get the div element with an id "app"
+            const app = document.getElementById('app');
+
+            //create a new h1 element
+            const header = document.createElement('h1');
+
+            //create a text node for created h1 element
+            const text = 'Develop. Preview. Ship. 🚀';
+            const headerContent = document.createTextNode(text);
+
+            //Append the text to the h1 element
+            //appendChild -> 'child' node in tree structure 
+            header.appendChild(headerContent);
+
+            //Place the h1 element inside the div
+            app.appendChild(header);
+        </script>
+    </body>
+</html>
