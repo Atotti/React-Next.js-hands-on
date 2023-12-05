@@ -1,4 +1,4 @@
-#Reactを始める
+# Reactを始める
 Reactを使用するには，[unpkg.com](unpkg.com)という2つのReactスクリプトをロードする
 ```html
 <html>
@@ -12,9 +12,9 @@ Reactを使用するには，[unpkg.com](unpkg.com)という2つのReactスク�
   </body>
 </html>
 ```
-##JSX
+## JSX
 JSXはJavaScriptの構文拡張機能．
-##Babel
+## Babel
 以下のスクリプトに貼り付ける
 ```html
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
