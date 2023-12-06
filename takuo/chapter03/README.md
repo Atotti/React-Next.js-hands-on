@@ -3,7 +3,31 @@
 HTML(クライアントがサーバから受け取った初期状態)から，スクリプトでDOMを変更する．
 
 - 初期状態のHTML
-  ![fig_html]
+  ```html
+  <html>
+  <body>
+      <div id="app"></div>
+      <script type="text/javascript">
+          // id="app"のdiv要素を選択
+          const app = document.getElementById("app");
+
+          // h1の要素を作成
+          const header = document.createElement("h1");
+
+          // h1につけるtext nodeを定義
+          const text = "Develop. Preview. Ship. 🚀";
+          const headerContent = document.createTextNode(text);
+
+          // headerにtext nodeをappend
+          header.appendChild(headerContent);
+          
+          // app(初期HTMLのdivノード)にheader nodeをappend
+          app.appendChild(header);
+      </script>
+  </body>
+  </html>
+  ```
+
 - 変更されたDOM
   ![fig_dom]
 
