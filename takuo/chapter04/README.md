@@ -42,6 +42,14 @@ Reactのコード(**宣言型**)とJavaScript(**命令型**)を比較してみ�
 
 少ない宣言で，やりたいことがわかりやすい！
 
+### What: JSX?
+JavaScriptの構文拡張機能．[3つのルール][jsx_3rules]に従えば，HTMLとJavaScript以外に学ぶ必要はない．
+ただ，ブラウザがJSXを理解できないため，`Babel`等のコンパイラを必要とする．
+```html
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/jsx">...</script>
+```
+
 ---
 Reactで重要なJavaScript関数，見ておきたい．
 - [Functions](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Functions) and [Arrow Functions](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
@@ -51,3 +59,6 @@ Reactで重要なJavaScript関数，見ておきたい．
 - [Template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals)
 - [Ternary Operators](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
 - [ES Modules and Import / Export Syntax](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Modules)
+
+
+[jsx_3rules]: https://react.dev/learn/writing-markup-with-jsx#the-rules-of-jsx
