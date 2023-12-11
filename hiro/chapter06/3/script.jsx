@@ -3,12 +3,12 @@ const app = document.getElementById("app")
 
 function Header(props) {
   console.log(props); // { title: "React 💙" }
-  return <h1>props.title</h1>;
+  return <h1>{props.title}</h1>;
 }
 
 function Header1({ title }) { // オブジェクトの分割代入
   console.log(title); // "React 💙"
-  return <h1>title</h1>;
+  return <h1>{title ? title : 'Default Title'}</h1>;
 }
 
 function HomePage() {

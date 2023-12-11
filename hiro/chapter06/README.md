@@ -8,3 +8,5 @@
 
 ### JSXでjavascript式
 中括弧の中にjavascript式をかける
+![Alt text](images/image-2.png)
+
