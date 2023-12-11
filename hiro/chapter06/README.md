@@ -10,3 +10,6 @@
 中括弧の中にjavascript式をかける
 ![Alt text](images/image-2.png)
 
+### リストを回す
+mapを使える．
+![Alt text](images/image-3.png)
