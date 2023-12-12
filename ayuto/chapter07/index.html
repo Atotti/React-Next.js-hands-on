@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+
+    <script type="text/jsx">
+    function HomePage() {
+        const { 
+            Button             //Material-UI（MUI）のButtonコンポーネント
+        } = MaterialUI;
+
+        const [likes, setLikes] = React.useState(0);
+    
+        function handleClick() {
+        setLikes(likes + 1);
+        }
+    
+        return (
+        <div>
+            <Button variant='contained' color='primary' onClick={handleClick}>Likes ({likes})</Button>
+        </div>
+        );
+    }
+    ReactDOM.render(<HomePage />, app)
+</script>
+</body>
+</html>
