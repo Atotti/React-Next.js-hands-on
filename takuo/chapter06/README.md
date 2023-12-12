@@ -73,7 +73,7 @@ function Header({ title }) {
 +  return <h1>title</h1>;
 }
 ```
-- 全体像
+- 全体像，汎用的にタイトルの文字列を変更できるようになった
 ```html:recieveProp.html
 <html>
     <div id="app"></div>
@@ -92,6 +92,7 @@ function Header({ title }) {
                 <div>
                     {/*Header()にpropを渡す*/}
                     <Header title="React" />
+                    <Header title="A New Title" />
                 </div>
             );
         }
@@ -104,8 +105,90 @@ function Header({ title }) {
 ```html
 <div id="app">
     <div>
-        <h1>title</h1>
+        <h1>React</h1>
+        <h1>A New Title</h1>
     </div>
 </div>
 ```
+### JSXでの変数の使用
+JSXマークアップ内に`{}`を追加すると，JavaScript構文を直接記述できる．
+```diff html
+function Header({ title }) {
+  console.log(title);
+  return <h1>{title}</h1>;
+}
+```
+`return <h1>title</h1>;` -> `return <h1>{title}</h1>;`
+
+`{}`内はJavaScriptなので，次のようにも書ける.
+- ドット表記による**オブジェクトプロパティ**
+  ```html
+  function Header(props) {
+  return <h1>{props.title}</h1>;
+  }
+  ```
+- **テンプレートリテラル**
+  ```html
+  function Header({ title }) {
+  return <h1>{`Cool ${title}`}</h1>;
+  }
+  ```
+- **関数の戻り値**
+  ```html
+    function createTitle(title) {
+        if (title) {
+        return title;
+        } else {
+        return 'Default title';
+        }
+    }
+
+    function Header({ title }) {
+        return <h1>{createTitle(title)}</h1>;
+    }
+  ```
+- **3項演算子**
+  ```html
+    function Header({ title }) {
+    return <h1>{title ? title : 'Default Title'}</h1>;
+    }
+  ```
+
+## 配列の反復処理
+配列メソッドを使用して反復的に同じスタイルのUIを生成できる．
+
+```diff html
+function HomePage() {
++  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
++      <ul>
++        {names.map((name) => (
++          <li key={name}>{name}</li>
++        ))}
++      </ul>
+    </div>
+  );
+}
+```
+`names`という配列の各要素に対して，`names.map()`メソッドで反復処理をしている．
+`map()`は配列のメソッド(JS)なので，`{}`で囲む．更新する`<li>`要素を確定できるように，ユニークな`key`プロパティを指定してやる．
+- see: `mapLoop.html`
+- DOM↓
+```html
+<div id="app">
+    <div>
+        <h1>NAMESSSS</h1>
+        <ul>
+            <li>Ada Lovelace</li>
+            <li>Grace Hopper</li>
+            <li>Margaret Hamilton</li>
+        </ul>
+    </div>
+</div>
+```
+
+
 [object_destructuring]: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
