@@ -80,3 +80,8 @@ Reactでは，コンポーネントは**UIを返す関数**，`script`タグ内�
     </div>
 </div>
 ```
+ネストを繰り返して，下図のような木構造を作ることができる．
+![fig:components_tree]
+この図のようにすれば，`ReactDOM.render()`に`HomePage`だけ渡せば他のようそもまとめてDOMの要素として構築できる．
+
+[fig:components_tree]: ./components_tree.png
