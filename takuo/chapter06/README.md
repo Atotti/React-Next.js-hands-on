@@ -73,7 +73,7 @@ function Header({ title }) {
 +  return <h1>title</h1>;
 }
 ```
-
+- 全体像
 ```html:recieveProp.html
 <html>
     <div id="app"></div>
@@ -100,7 +100,8 @@ function Header({ title }) {
     </script>
 </html>
 ```
-```html:DOM
+- DOM
+```html
 <div id="app">
     <div>
         <h1>title</h1>
