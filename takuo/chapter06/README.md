@@ -66,7 +66,7 @@ propsはオブジェクトであるため，[オブジェクト分割][object_de
 受け取ったオブジェクトのうち，`title`プロパティの値を引数に渡している…？
 
 オブジェクト分割を用いれば，引数に渡されるオブジェクト内の必要なプロパティの値を用いて，コンポーネントの要素を変更できる．
-引数の`title`プロパティの値を`<h1>`の文字列にする↓．
+引数の`title`propの値を`<h1>`の文字列にする↓．
 ```diff html
 function Header({ title }) {
   console.log(title);
@@ -85,7 +85,7 @@ function Header({ title }) {
 
         function Header({ title }) {
             console.log(title);
-            return <h1>title</h1>;
+            return <h1>{title}</h1>;
         }
         function HomePage() {
             return (
