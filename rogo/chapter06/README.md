@@ -21,18 +21,7 @@ function Header4({title}) {
     //汎用的なタイトルのコンポーネントができた
     return <h1>{title ? title : 'Default Title'}</h1>;
 }
-function HomePage() {
-    return (
-        <div>
-        <Header title = "React" />
-        <Header2 title = "React" />
-        <Header3 title = "React" />
-        <Header4 title = "React" />
-        <Header4 title = "" />
-        
-        </div>
-    );
-}
+
 function HomePage() {
     const names = ['Takahashi', 'Aoki', 'Bob'];
     return (
