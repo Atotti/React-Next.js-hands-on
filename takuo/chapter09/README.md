@@ -1,6 +1,6 @@
 # Chapter 09
 ## Nexe.jsのインストール
-> Next.jsを使うには，[Node.js][Node.js_install](18.17.0 or later)をインストールする必要がある．
+> Next.jsを使うには，[Node.js][Node.js_install](18.17.0 or later)を[インストール][Node_install_ubuntu]する必要がある．
 
 プロジェクトでNext.jsを使う時，`index.html`内で`react`と`react-dom`をスクリプトでロードする必要はない．
 ```diff html
@@ -115,6 +115,6 @@ Next.jsはファイルシステムルーティングを使用するので，プ�
    これがアプリケーションのメインレイアウトで，全てのページで共有されるUI要素を追加できる．
 
 
-
+[Node_install_ubuntu]: https://qiita.com/seibe/items/36cef7df85fe2cefa3ea
 [Node.js_install]: https://nodejs.org/en/
 [err_fig]: ./err.png
