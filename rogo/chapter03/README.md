@@ -1,4 +1,4 @@
-#JavaSrciptでUIを更新する
+# JavaSrciptでUIを更新する
 
 JavaScriptでdivタグの中にh1タグを作ってテキストを表示する
 

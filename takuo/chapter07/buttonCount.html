@@ -1,0 +1,34 @@
+<html>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/jsx">
+        const app = document.getElementById("app");
+
+        function Header({ title }) {
+            console.log(title);
+            return <h1>{title}</h1>;
+        }
+        function HomePage() {
+            const [likes, setLikes] = React.useState(0);
+
+            function handleClick() {
+                setLikes(likes + 1);
+            }
+
+            return (
+                <div>
+                    <Header title="Button Counter!!" />
+                    <Header title={likes} />
+                    <button onClick={handleClick}>
+                        LIKE ME!
+                    </button>
+
+                </div>
+            );
+        }
+
+        ReactDOM.render(<HomePage />, app);
+    </script>
+</html>
