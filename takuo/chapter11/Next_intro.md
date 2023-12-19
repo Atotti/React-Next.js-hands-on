@@ -31,7 +31,7 @@ ReactとJavaScriptに対する基本的な理解が必要．Reactについては
 
 ### システム要件
 - Node.js 18.17.0 or later
-  - Reactでインストールしたので，OK.
+  - Reactの章でインストールしたので，OK.
 - OS(macOS, Win, WSL, Linux)
   - OK(WSL).
 - Githubアカウント
