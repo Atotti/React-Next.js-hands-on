@@ -77,6 +77,29 @@ export default function Page() {
 
 ![fig:changed]
 
+### CSSモジュール
+CSSモジュールを使用すると，一意のクラス名を自動的に作成することでCSSのスコープをコンポーネントに設定できるので，スタイルの衝突についても心配ご無用．
+上で現れた三角をCSSで再現するには，次のようにします．
+```css
+.shape {
+  height: 0;
+  width: 0;
+  border-bottom: 30px solid black;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+```
+これを`/app/ui/home.module.css`に記述します．
+`/app/page.tsx`でインポートすると…
+```jsx
+import styles from '@/app/ui/home.module.css';
+ 
+//...
+<div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
+    <div className={styles.shape}></div>; //changed here
+// ...
+```
+
 
 
 [link_rootLayout]: https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required
