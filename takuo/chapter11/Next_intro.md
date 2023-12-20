@@ -1,7 +1,9 @@
 # chapter 11
+
 乙．
 Reactアプリケーションから，Next.jsアプリケーションへと移行できました．
-次からはもっとNext.js
+次からはもっとNext.jsするよ．
+
 ---
 ## Nezxt.jsを学ぶ
 Next.jsでフルスタックWebアプリケーションを構築することで，Next.jsの主な機能を学習します．
