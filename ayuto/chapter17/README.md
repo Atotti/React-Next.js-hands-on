@@ -21,3 +21,48 @@ APIレイヤーなしでの直接クエリ： 前述したように、サーバ�
 - データベース
 - クエリ
 - API
+
+このチュートリアルではORMを利用せずに
+モデルを定義して
+```ts
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+```
+直接SQLを叩く関数を実装して
+```ts
+export async function fetchRevenue() {
+  try {
+    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
+```
+page中で呼び出している
+```tsx
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+import { fetchRevenue } from '@/app/lib/data';
+
+export default async function Page() {
+  const revenue = await fetchRevenue();
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        <RevenueChart revenue={revenue}  />
+      </div>
+    </main>
+  );
+}
+```
