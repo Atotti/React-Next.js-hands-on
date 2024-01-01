@@ -78,7 +78,7 @@ Next.jsは，画像等の静的アセットを最上位フォルダの`/public`�
 #### デスクトップヒーロー画像の追加
 `/public`内の`hero-desktpo.png`と`hero-mobile.png`を`<Image>`コンポーネントを使って表示します．これらは違う画像ですが，デバイスに応じてどれを表示させるか変化させたいです．
 
-`/app/page.tsx`に`next/image`コンポーネントをインポートし，<Image>コンポーネントを追加します．
+`/app/page.tsx`に`next/image`コンポーネントをインポートし，`<Image>`コンポーネントを追加します．
 ```diff tsx
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
