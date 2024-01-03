@@ -73,11 +73,7 @@ def plot_progress(users: np.array, scores: np.array):
     # print(d)
     # print(len(d))
     xmin, xmax = plt.xlim()
-    if len(d) != 10 and len(d) != 0:
-        label = "{}Border".format(str(date_list[len(d)])[5:])
-        plt.hlines((len(d)+1) * 10, xmin, xmax, linewidth=2,
-                   linestyle='dashed', color="gray", label=label)
-        plt.xlim(xmin, xmax)
+
 
     if len(d) != 0:
         label = "{}Border".format(str(d[-1])[5:])
