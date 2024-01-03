@@ -17,7 +17,7 @@
 ### `<Link>`コンポーネント
 Next.jsでは，`<Link />`コンポーネントを使用することでアプリケーション内でのページ間リンクを作成できます．`<Link>`を使用すると，JavaScriptによる[クライアントサイドナビゲーション][link:client-sideNavigation]を実行できます．
 
-> [client-side navigation][link:client-sideNavigation]: サーバ上ではアプリケーションのコードはルートのセグメントごとに分割されている．Next.jsがこれらをあらかじめキャッシュしておくことで，ブラウザはページを再読み込みすることなく，変更されたルートセグメントのみが再レンダリングされるようになる(自動コード分割とプリフェッチで詳しく後述)
+> [client-side navigation][link:client-sideNavigation]: サーバ上ではアプリケーションのコードはルートのセグメントごとに分割されている．Next.jsがこれらをあらかじめキャッシュしておくことで，ブラウザはページを再読み込みすることなく，変更されたルートセグメントのみが再レンダリングされるようになる(**自動コード分割とプリフェッチ**で詳しく後述)
 
 `Link`コンポーネントを使用するには，`app/ui/dashboard/nav-links.tsx`を編集します．`next/link`からLinkコンポーネントをインポートし，`<a>`タグを`<Link>`タグに置き換えます．
 ```diff tsx
@@ -66,7 +66,9 @@ Next.jsでは，アプリケーションのコードをルートセグメント�
 ---
 
 ### アクティブリンクを可視化する
-一般的なUIでは，ユーザが現在どのページに居るのかを示すアクティブリンクを表示します．これを行うために，URLからユーザの現在のパスを取得する必要があります．
+一般的なUIでは，ユーザが現在どのページに居るのかを示すようなスタイリングを行います．これを行うために，URLからユーザの現在のパスを取得する必要があります．
+> どのページに居るのかを示すようなスタイリング: 今見ているページへ遷移するボタンに色がつく，みたいなやつ
+
 Next.jsでは，パスを確認してこのようなパターンを実装できる[`usePathname()`][link:usePathname] hookが提供されています．
 
 `usePathname()`はhookなので，これを使った機能を実装する`nav-links.tsx`をクライアントコンポーネントに変更する必要があります．`"use client"`ディレクティブをファイルの頭に追記し，`next/navigation`から`usePathname()`をインポートします．
@@ -90,6 +92,50 @@ Next.jsでは，パスを確認してこのようなパターンを実装でき�
  export default function NavLinks() {
 +  const pathname = usePathname();
    // ...
+ }
+```
+
+また，`cslx`ライブラリを使用すると，リンクがアクティブなときにクラス名を適用するような条件分岐を設定できます．
+`pathname == link.href`のとき，リンクのテキストが青くなり，背景が水色のままになります．
+```diff tsx
+ 'use client';
+  
+ import {
+   UserGroupIcon,
+   HomeIcon,
+   DocumentDuplicateIcon,
+ } from '@heroicons/react/24/outline';
+ import Link from 'next/link';
+ import { usePathname } from 'next/navigation';
++import clsx from 'clsx';
+ 
+ // ...
+ 
+ export default function NavLinks() {
+   const pathname = usePathname();
+  
+   return (
+     <>
+       {links.map((link) => {
+         const LinkIcon = link.icon;
+         return (
+           <Link
+             key={link.name}
+             href={link.href}
++            className={clsx(
++              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
++              {
++                'bg-sky-100 text-blue-600': pathname === link.href,
++              },
++            )}
+           >
+             <LinkIcon className="w-6" />
+             <p className="hidden md:block">{link.name}</p>
+           </Link>
+         );
+       })}
+     </>
+   );
  }
 ```
 
