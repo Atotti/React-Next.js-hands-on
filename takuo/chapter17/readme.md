@@ -156,11 +156,147 @@ export async function fetchLatestInvoices() {
 ![img:latestInvoices]
 
 #### `<Card/>`のデータ取得
+`<Card>`コンポーネントに必要なデータを取得します．このコンポーネントは次に示すデータを表示します．
+- 処理済みの請求書の枚数
+- 処理中の請求書の枚数
+- 請求書の総数
+- 顧客の総数
+
+容易に思いつく実装としては，全ての請求書と顧客のデータを取得し，JavaScriptで`Allay.length`を用いて請求書や顧客の総数を求めることができそうです．
+
+しかしSQLを使うならば，全てのデータを引っ張ってくる必要はなく，必要なデータだけを取得することができます(データ数が増えてきた場合，全部取得するのは愚かですね)．例えば請求書と顧客の総数を取得するとき，JavaScriptによる実装とSQLによる実装例は下のようになります．
+```diff
+// total invoices count
+- const totalInvoices = allInvoices.length;
++ const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
+// total customers count
+- const totalCustomers = allCustomers.length;
++ const customerCountPromise = sql`SELECT COUNT(*) FROMcustomers`;
+```
+データ取得用の関数は`fetchCardData`として`/app/lib/data.ts`に用意されています．
+
+最後に，`Card`コンポーネントに必要な値が何であるか確認し，`fetchCardData`関数を用いてデータを取得するプログラムを`/app/dashboard/page.tsx`に記述します．
+
+```diff tsx
+  import { Card } from '@/app/ui/dashboard/cards';
+  import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+  import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+  import { lusitana } from '@/app/ui/fonts';
+  import {
+    fetchRevenue,
+    fetchLatestInvoices,
++   fetchCardData
+  } from '@/app/lib/data';
+  
+  export default async function Page() {
+    const revenue = await fetchRevenue();
+    const latestInvoices = await fetchLatestInvoices();
++   const {
++     numberOfInvoices,
++     numberOfCustomers,
++     totalPaidInvoices,
++     totalPendingInvoices,
++   } = await fetchCardData();
+    return (
+      <main>
+        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+          Dashboard
+        </h1>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
++         <Card title="Collected" value={totalPaidInvoices} type="collected" />
++         <Card title="Pending" value={totalPendingInvoices} type="pending" />
++         <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
++         <Card
++           title="Total Customers"
++           value={numberOfCustomers}
++           type="customers"
++         />
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+          <RevenueChart revenue={revenue}  />
+          <LatestInvoices latestInvoices={latestInvoices} />
+        </div>
+      </main>
+    );
+  }
+```
+- `fetchCardData`関数を用いてデータを取得するので，これをインポートします．
+- `fetchCardData()`の返り値を受け取ります．返り値は下の4つなので，これに適合するようにします．
+  - numberOfCustomers
+  - numberOfInvoices
+  - totalPaidInvoices
+  - totalPendingInvoices
+- `Card`コンポーネント関連のコメントアウトを解除します．
+
+要約カードが現れましたね．
+
+ここで注意すべきことが2点あります．
+1. データのリクエストは意図せず互いを相互にブロックし，**リクエストウォーターフォール**を作成します．
+2. デフォルトでは，Next.jsはパフォーマンス向上のためにルートを事前レンダリングし，これは**静的レンダリング**と呼ばれます．静的なので，*データが更新されてもダッシュボードに表示される内容は変化しません*．
+
+注意点1については後述し，2については次の章で解説します．
+
 ---
 ### request waterfallとは？
+`waterfall`とは滝のこで，前のリクエストが完了すると次のリクエストが実行されるような一連のリクエストを指します．データ取得の場合，各リクエストは前のリクエストがデータを返した後に処理が開始されます．
+> ウォーターフォール型開発の`ウォーターフォール`はこれと同じです．
+
+![img:waterFall]
+
+たとえば`/app/dashboard/page.tsx`で呼び出しているリクエストについては，`fetchRevenue()`の処理が完了してから`fetchLatestInvoices()`が実行され，それが完了してから`fetchCardData()`が呼び出されます．
+
+このように逐次的にリクエストが実行されることは必ずしも悪いわけではなく，リクエストを実行するためには前のリクエストで得た条件が必要な場合などは逐次的な処理でないといけません．
+
+> ユーザIDとプロファイルをはじめに取得し，そのIDを用いてフレンドリストを取得する場合などは，逐次的に処理を行う必要があります．
+
+逐次処理が必ずしも必要でない場面であっても逐次的にリクエストが処理されてしまうため，リクエスト数が多かったり時間のかかるリクエストがある場合はパフォーマンスに影響が出る場合があります．
 ### データ取得の並列化
+ウォーターフォールによるパフォーマンスの低下を回避するには，リクエストの処理を並列化すればよいです．
 
+JavaScriptでは，[`Promise.all()`][link:PrimiseAll]や[`Promise.allSettled()`][link:PromiseAllSettled]を用いることで，引数に取ったPromiseを同時に開始することができます．例えば`/app/lib/data.ts`では，`fetchData()`の中で`Promise.all()`を用いています．
+```ts
+export async function fetchCardData() {
+  try {
+    // You can probably combine these into a single SQL query
+    // However, we are intentionally splitting them to demonstrate
+    // how to initialize multiple queries in parallel with JS.
+    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
+    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+    const invoiceStatusPromise = sql`SELECT
+         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+         FROM invoices`;
 
+    const data = await Promise.all([
+      invoiceCountPromise,
+      customerCountPromise,
+      invoiceStatusPromise,
+    ]);
+
+    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
+    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
+    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+
+    return {
+      numberOfCustomers,
+      numberOfInvoices,
+      totalPaidInvoices,
+      totalPendingInvoices,
+    };
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch card data.');
+  }
+}
+```
+このようにして処理を並列化することで，次のような利点があります．
+- 実行の開始待ちをしていた分だけ処理時間が減り，パフォーマンスが向上します．
+- 生のJavaScriptを使っているので，任意のライブラリやフレームワークを使用できます．
+
+> しかしこの処理には欠点があり，もし**ある1つのリクエストが他よりもはるかに遅い**場合，そのリクエスト処理が終了するまで次の処理を開始できません．
+> 
+> リクエスト処理の開始は同時にできますが，次の処理(`const data`配列を分解する処理)への移行は一番処理時間が長いリクエストの処理に引っ張られてしまいます．
 
 [link:RouteHandlers]: https://nextjs.org/docs/app/building-your-application/routing/route-handlers
 
@@ -177,3 +313,5 @@ export async function fetchLatestInvoices() {
 [img:activatedRevenue]: ./revenue.png
 
 [img:latestInvoices]: ./latestInvoices.png
+
+[img:waterFall]: ./waterFall.png
