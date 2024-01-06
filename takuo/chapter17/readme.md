@@ -103,6 +103,58 @@ devのdashboardページを見ると，棒グラフが表示されるように�
 ![img:activatedRevenue]
 
 #### `<LatestInvoices/>`のデータ取得
+`<LatestInvoices/>`コンポーネントのため，直近5件の請求書(invoice)データを取得します．
+
+全ての請求書データを取得し，JavaScript上で発行時刻順にソートするのが簡単ですが，データ数が多くなると処理に時間がかかってしまうため，微妙です．したがって，ここでは**SQLクエリを工夫**して最新5件の請求書データを取得することとします．
+
+`/app/lib/data.ts`には次のようなクエリが用意されています．
+```ts
+export async function fetchLatestInvoices() {
+  try {
+    const data = await sql<LatestInvoiceRaw>`
+      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      ORDER BY invoices.date DESC
+      LIMIT 5`;
+// ...
+  }
+}
+```
+> customer idが一致するようにテーブルを結合し，invoices.dateを降順でソートしています
+
+`/app/dashboard/page.tsx`にて，`fetchLatestInvoices`関数をインポートし，`<LatestInvoices />`のコメントアウトを解除します．
+```diff tsx
+    import { Card } from '@/app/ui/dashboard/cards';
+    import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+    import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+    import { lusitana } from '@/app/ui/fonts';
++   import { fetchRevenue, fetchLatestInvoices } from '@/app/lib/data';
+    
+    export default async function Page() {
+    const revenue = await fetchRevenue();
++   const latestInvoices = await fetchLatestInvoices();
+    return (
+        <main>
+        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+            Dashboard
+        </h1>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Cards commented out here */}
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+            <RevenueChart revenue={revenue}  />
++           <LatestInvoices latestInvoices={latestInvoices} />
+        </div>
+        </main>
+    );
+    }
+```
+`LatestInvoices`コンポーネントは`/app/ui/dashboard/latest-invoices.tsx`で実装されているので，そのコメントアウトも解除しておきます．
+
+直近の請求書たちが表示されるようになりました．
+![img:latestInvoices]
+
 #### `<Card/>`のデータ取得
 ---
 ### request waterfallとは？
@@ -123,3 +175,5 @@ devのdashboardページを見ると，棒グラフが表示されるように�
 [link:SQLInjection]: https://vercel.com/docs/storage/vercel-postgres/sdk#preventing-sql-injections
 
 [img:activatedRevenue]: ./revenue.png
+
+[img:latestInvoices]: ./latestInvoices.png
