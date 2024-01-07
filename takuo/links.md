@@ -1,0 +1,13 @@
+- 勉強会資料
+  - https://hackmd.io/AuBMSWTZQKmwCNTMBnI12A
+- 教材
+  - React: https://nextjs.org/learn/react-foundations
+  - Next: https://nextjs.org/learn/dashboard-app
+- リポジトリ
+  - https://github.com/Atotti/React-Next.js-hands-on
+- Reactリファレンス(日本語)
+  - https://ja.react.dev/reference/react
+- Nextリファレンス(日本語)
+  - https://nextjs-ja-translation-docs.vercel.app/docs/getting-started
+- Nextリファレンス(英語)
+  - https://nextjs.org/docs
