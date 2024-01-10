@@ -315,3 +315,7 @@ export async function fetchCardData() {
 [img:latestInvoices]: ./latestInvoices.png
 
 [img:waterFall]: ./waterFall.png
+
+[link:PrimiseAll]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+
+[link:PromiseAllSettled]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
